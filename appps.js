@@ -1,73 +1,52 @@
+document.addEventListener('DOMContentLoaded', () => {
+  const taskArray = [];
 
-//JS code for ToDO App
+  const taskInputField = document.getElementById('task-input-field');
+  const taskListContainer = document.getElementById('task-list-container');
+  const addTaskButton = document.getElementById('add-task-button');
 
-var listOfActivities = [];
+  addTaskButton.addEventListener('click', addTask);
 
-// Create an array named list to store our to-do activities
+  function addTask() {
+    if (taskInputField.value.trim() !== '') {
+      taskArray.push(taskInputField.value.trim());
+      taskInputField.value = '';
+      displayTasks();
+    }
+  }
 
-var input = document.getElementById("input");
+  function displayTasks() {
+    taskListContainer.innerHTML = '';
 
-// Create a DOM variable  named input to get the to-do activities added from HTML form
+    taskArray.forEach((task, index) => {
+      const taskItem = document.createElement('li');
+      taskItem.innerHTML = `${task}
+        <a href="#" class="edit-task" data-index="${index}">Edit</a>
+        <a href="#" class="delete-task" data-index="${index}">&times; |</a>`;
+      taskListContainer.appendChild(taskItem);
+    });
 
-var todolist = document.getElementById("todolist");
+    document.querySelectorAll('.delete-task').forEach(button => {
+      button.addEventListener('click', removeTask);
+    });
 
-//Create a DOM variable todolist ul tag (unordered list)
+    document.querySelectorAll('.edit-task').forEach(button => {
+      button.addEventListener('click', modifyTask);
+    });
+  }
 
-document.getElementById("button").onclick = click;
+  function removeTask(event) {
+    const index = event.target.getAttribute('data-index');
+    taskArray.splice(index, 1);
+    displayTasks();
+  }
 
-//Using onlclick to run the click function when button is clicked.
-
-// Adding a to-do activity
-
-function click() {
-  // function -> click()
-
-  listOfActivities.push(input.value);
-  console.log(listOfActivities);
-  //Using push array operation to add the input todo activity to the list created earlier.
-  input.value = "";
-  // Giving Empty string to input value after pushing it to array
-  showList();
-  // Calling a function showList() to display the todo activities present in the list after addding new element
-}
-
-// function -> showList()
-
-function showList() {
-  //Using innerHTML DOM property to set HTML , giving empty string initially
-
-  todolist.innerHTML = " ";
-
-  //To display each to-do activity from the list using innerHTML property.
-
-  listOfActivities.forEach(function (n, i) {
-    todolist.innerHTML +=
-      "<li>" +
-      n +
-      "<a onclick='editItem(" +
-      i +
-      ")'>Edit</a>" +
-      "<a onclick='deleteItem(" +
-      i +
-      ")'>&times | </a></li>";
-  });
-}
-
-//Deleting an activity
-function deleteItem(i) {
-  // Using splice array operations to remove one item at specified index
-  listOfActivities.splice(i, 1);
-  // Display the todo list
-  showList();
-}
-
-//Editing an activity
-
-function editItem(i) {
-  //Using prompt to get the new value of the activty after editing
-  var newValue = prompt("Please insert your new value");
-  // Using splice array operation to remove the previous activity and add the new activity
-  listOfActivities.splice(i, 1, newValue);
-  //Display the list
-  showList();
-}
+  function modifyTask(event) {
+    const index = event.target.getAttribute('data-index');
+    const newValue = prompt('Please insert your new value', taskArray[index]);
+    if (newValue !== null && newValue.trim() !== '') {
+      taskArray[index] = newValue.trim();
+      displayTasks();
+    }
+  }
+});
