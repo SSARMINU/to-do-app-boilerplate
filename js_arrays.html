@@ -3,21 +3,19 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>To-Do App</title>
-    <link rel="stylesheet" href="sttyles.css" />
+    <title>Task Manager</title>
+    <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
-    <h1>To-Do App</h1>
-    <img
-      src="https://s3.ap-south-1.amazonaws.com/kalvi-education.github.io/front-end-web-development/todo-app-bot.png"
-    />
+    <h1>Task Manager</h1>
+    <img src="https://s3.ap-south-1.amazonaws.com/kalvi-education.github.io/front-end-web-development/todo-app-bot.png" />
     <div class="container">
-      <div class="form">
-        <input type="text" id="input" />
-        <button id="button">Add</button>
+      <div class="input-section">
+        <input type="text" id="task-input-field" />
+        <button id="add-task-button">Add</button>
       </div>
-      <ul id="todolist"></ul> 
+      <ul id="task-list-container"></ul> 
     </div>
-    <script src="appps.js"></script>
+    <script src="script.js"></script>
   </body>
 </html>
